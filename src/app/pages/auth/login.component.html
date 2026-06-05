@@ -1,0 +1,32 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-brand">
+      <div class="brand-circle">D</div>
+      <div>
+        <h1>Doc.type</h1>
+        <p>Entrar no sistema</p>
+      </div>
+    </div>
+
+    <form class="auth-form" [formGroup]="form" (ngSubmit)="submit()">
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email" placeholder="seu@email.com" />
+      <small class="field-error" *ngIf="form.controls.email.touched && form.controls.email.invalid">
+        Informe um email valido.
+      </small>
+
+      <label for="senha">Senha</label>
+      <input id="senha" type="password" formControlName="senha" placeholder="Sua senha" />
+      <small class="field-error" *ngIf="form.controls.senha.touched && form.controls.senha.invalid">
+        A senha precisa ter pelo menos 6 caracteres.
+      </small>
+
+      <button type="submit" class="primary-button" [disabled]="loading">
+        {{ loading ? 'Entrando...' : 'Entrar' }}
+      </button>
+    </form>
+
+    <p class="auth-footer">Não tem conta? <a routerLink="/register">Registrar</a></p>
+    <div class="auth-message" *ngIf="message">{{ message }}</div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<header class="page-header profile-header">
+  <div class="profile-identity">
+    <div class="avatar">{{ (usuario?.nome || session.currentUserName).slice(0, 2).toUpperCase() }}</div>
+    <div>
+      <h1>{{ usuario?.nome || session.currentUserName }}</h1>
+      <p>{{ usuario?.email || session.user?.email }}</p>
+    </div>
+  </div>
+</header>
+
+<section class="card activity-card">
+  <div class="section-title">Ultimas Atividades</div>
+  <ul class="activity-list" *ngIf="atividades.length; else noActivity">
+    <li *ngFor="let atividade of atividades">
+      <span>{{ atividade.descricao }}</span>
+      <span>{{ atividade.criadoEm | date: 'dd/MM/yyyy HH:mm' }}</span>
+    </li>
+  </ul>
+  <ng-template #noActivity>
+    <p class="muted">Nenhuma atividade encontrada.</p>
+  </ng-template>
+</section>
+
+<section class="card table-card">
+  <div class="section-title">Meus Documentos</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Data/Hora</th>
+        <th>Tipo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let documento of documentos">
+        <td>{{ documento.nome }}</td>
+        <td>{{ documento.criadoEm | date: 'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ documento.tipoArquivo }}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="auth-message" *ngIf="message">{{ message }}</div>

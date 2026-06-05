@@ -1,0 +1,28 @@
+<header class="page-header">
+  <div>
+    <h1>Gerenciamento de Documentos</h1>
+    <p>Bem-vindo ao sistema, {{ session.currentUserName }}.</p>
+  </div>
+</header>
+
+<section class="card stats-grid" *ngIf="resumo as r">
+  <div class="stat-card"><span>Total de usuarios</span><strong>{{ r.totalUsuarios }}</strong></div>
+  <div class="stat-card"><span>Total de documentos</span><strong>{{ r.totalDocumentos }}</strong></div>
+  <div class="stat-card"><span>Em analise</span><strong>{{ r.documentosEmAnalise }}</strong></div>
+  <div class="stat-card"><span>Finalizados</span><strong>{{ r.documentosFinalizados }}</strong></div>
+</section>
+
+<section class="card activity-card">
+  <div class="section-title">Ultimas Atividades</div>
+  <ul class="activity-list" *ngIf="atividades.length; else emptyActivities">
+    <li *ngFor="let atividade of atividades">
+      <span>{{ atividade.descricao }}</span>
+      <span>{{ atividade.criadoEm | date: 'dd/MM/yyyy HH:mm' }}</span>
+    </li>
+  </ul>
+  <ng-template #emptyActivities>
+    <p class="muted">Nenhuma atividade recente encontrada.</p>
+  </ng-template>
+</section>
+
+<div class="auth-message" *ngIf="message">{{ message }}</div>

@@ -1,0 +1,7 @@
+:host { display: block; }
+
+.field-error {
+  color: #dc2626;
+  font-size: 0.82rem;
+  margin-top: -8px;
+}

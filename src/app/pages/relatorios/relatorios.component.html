@@ -1,0 +1,41 @@
+<header class="page-header">
+  <h1>Relatório</h1>
+</header>
+
+<section class="card report-card">
+  <form class="filters-grid" [formGroup]="form" (ngSubmit)="buscar()">
+    <label>Nº Protocolo<input type="text" formControlName="protocolo" placeholder="001" /></label>
+    <label>Tipo<input type="text" formControlName="tipo" placeholder="PDF" /></label>
+    <label>Status<input type="text" formControlName="status" placeholder="Em Análise" /></label>
+    <label>Nome<input type="text" formControlName="nome" placeholder="Contrato" /></label>
+    <label>Data<input type="date" formControlName="data" /></label>
+    <div class="actions bottom-right">
+      <button class="primary-button" type="submit">Buscar</button>
+    </div>
+  </form>
+</section>
+
+<section class="card table-card">
+  <table>
+    <thead>
+      <tr>
+        <th>Protocolo</th>
+        <th>Nome</th>
+        <th>Data</th>
+        <th>Tipo</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let documento of documentos">
+        <td>{{ documento.protocolo }}</td>
+        <td>{{ documento.nome }}</td>
+        <td>{{ documento.criadoEm | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ documento.tipoArquivo }}</td>
+        <td><span class="status status-yellow">{{ documento.status }}</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="auth-message" *ngIf="message">{{ message }}</div>

@@ -1,0 +1,42 @@
+<header class="page-header">
+  <h1>Cadastrar Documento</h1>
+</header>
+
+<section class="card form-card">
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <label>Nome do Documento<input type="text" formControlName="nome" placeholder="Ex: Contrato" /></label>
+    <label>Descrição<textarea rows="4" formControlName="descricao" placeholder="Descreva o documento..."></textarea></label>
+    <label>Tipo<input type="text" formControlName="tipoArquivo" placeholder="PDF" /></label>
+    <label>Status<input type="text" formControlName="status" placeholder="Em Análise" /></label>
+    <label>Arquivo<input type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" (change)="onArquivoSelecionado($event)" /></label>
+    <label>Nome do arquivo<input type="text" formControlName="arquivoNome" placeholder="arquivo.pdf" readonly /></label>
+
+    <div class="actions right-align">
+      <button class="primary-button" type="submit" [disabled]="loading">{{ loading ? 'Salvando...' : 'Salvar' }}</button>
+    </div>
+  </form>
+</section>
+
+<section class="card table-card">
+  <div class="section-title">Documentos Cadastrados</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Protocolo</th>
+        <th>Nome</th>
+        <th>Status</th>
+        <th>Arquivo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let documento of documentos">
+        <td>{{ documento.protocolo }}</td>
+        <td>{{ documento.nome }}</td>
+        <td>{{ documento.status }}</td>
+        <td>{{ documento.arquivoNome || 'Sem arquivo' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="auth-message" *ngIf="message">{{ message }}</div>

@@ -1,0 +1,52 @@
+<header class="page-header">
+  <h1>Cadastro de Novo Usuário</h1>
+</header>
+
+<section class="card form-card">
+  <div class="section-title">Dados Pessoais</div>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="grid-2">
+      <label>Nome<input type="text" formControlName="nome" placeholder="Nome completo" /></label>
+      <label>Telefone<input type="tel" formControlName="telefone" placeholder="(00) 00000-0000" /></label>
+      <label>Email<input type="email" formControlName="email" placeholder="email@dominio.com" /></label>
+      <label>CPF<input type="text" formControlName="cpf" placeholder="000.000.000-00" /></label>
+      <label class="full-width">Endereço<input type="text" formControlName="endereco" placeholder="Rua, numero, bairro" /></label>
+      <label>CEP<input type="text" formControlName="cep" placeholder="00000-000" /></label>
+      <label>Usuario<input type="text" formControlName="nomeUsuario" placeholder="Usuário" /></label>
+      <label>Senha<input type="password" formControlName="senha" placeholder="Senha" /></label>
+    </div>
+
+    <div class="radio-group">
+      <span>Perfil de acesso</span>
+      <label><input type="radio" formControlName="perfilAcesso" value="ADMINISTRADOR" /> Administrador</label>
+      <label><input type="radio" formControlName="perfilAcesso" value="OPERADOR" /> Operador</label>
+      <label><input type="radio" formControlName="perfilAcesso" value="VISUALIZADOR" /> Visualizador</label>
+    </div>
+
+    <div class="actions">
+      <button class="primary-button" type="submit" [disabled]="loading">{{ loading ? 'Criando...' : 'Criar Usuário' }}</button>
+    </div>
+  </form>
+</section>
+
+<section class="card table-card">
+  <div class="section-title">Usuários Cadastrados</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Perfil</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let usuario of usuarios">
+        <td>{{ usuario.nome }}</td>
+        <td>{{ usuario.email }}</td>
+        <td>{{ usuario.perfilAcesso }}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="auth-message" *ngIf="message">{{ message }}</div>

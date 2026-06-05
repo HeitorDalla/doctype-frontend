@@ -1,0 +1,20 @@
+<div class="page-wrapper">
+  <aside class="sidebar">
+    <div class="brand">Doc.type</div>
+    <nav>
+      <a routerLink="/dashboard" routerLinkActive="active">Perfil Usuário</a>
+      <a routerLink="/usuario" routerLinkActive="active">Cadastro de Usuário</a>
+      <a routerLink="/cadastrar-documento" routerLinkActive="active">Cadastrar Documentos</a>
+      <a routerLink="/consulta-documento" routerLinkActive="active">Entrada de Documentos</a>
+      <a routerLink="/relatorios" routerLinkActive="active">Relatórios</a>
+    </nav>
+    <div class="sidebar-footer">
+      <span>{{ session.currentUserName }}</span>
+      <button class="primary-button logout-button" type="button" (click)="logout()">Sair</button>
+    </div>
+  </aside>
+
+  <main class="content">
+    <router-outlet />
+  </main>
+</div>

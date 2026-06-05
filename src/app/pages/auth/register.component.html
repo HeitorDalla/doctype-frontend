@@ -1,0 +1,32 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-brand">
+      <div class="brand-circle">D</div>
+      <div>
+        <h1>Doc.type</h1>
+        <p>Criar nova conta</p>
+      </div>
+    </div>
+
+    <form class="auth-form" [formGroup]="form" (ngSubmit)="submit()">
+      <label for="nome">Nome</label>
+      <input id="nome" type="text" formControlName="nome" placeholder="Seu nome completo" />
+
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email" placeholder="seu@email.com" />
+
+      <label for="senha">Senha</label>
+      <input id="senha" type="password" formControlName="senha" placeholder="Crie uma senha" />
+
+      <label for="confirmSenha">Confirmar Senha</label>
+      <input id="confirmSenha" type="password" formControlName="confirmSenha" placeholder="Digite novamente a senha" />
+
+      <button type="submit" class="primary-button" [disabled]="loading">
+        {{ loading ? 'Registrando...' : 'Registrar' }}
+      </button>
+    </form>
+
+    <p class="auth-footer">Já tem conta? <a routerLink="/">Login</a></p>
+    <div class="auth-message" *ngIf="message">{{ message }}</div>
+  </div>
+</div>

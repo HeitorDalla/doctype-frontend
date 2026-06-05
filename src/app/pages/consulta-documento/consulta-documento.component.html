@@ -1,0 +1,38 @@
+<header class="page-header">
+  <h1>Consulta de Documento</h1>
+  <div class="search-box wide">
+    <input type="search" [value]="termo" (input)="onSearch($any($event.target).value)" placeholder="Buscar documento..." />
+  </div>
+</header>
+
+<section class="card table-card">
+  <table>
+    <thead>
+      <tr>
+        <th>Protocolo</th>
+        <th>Nome do Doc.</th>
+        <th>Data</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let documento of filteredDocumentos">
+        <td>{{ documento.protocolo }}</td>
+        <td>{{ documento.nome }}</td>
+        <td>{{ documento.criadoEm | date: 'dd/MM/yyyy' }}</td>
+        <td><span class="status status-success">{{ documento.status }}</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <button type="button">&lt;</button>
+    <button type="button" class="active">1</button>
+    <button type="button">2</button>
+    <button type="button">3</button>
+    <button type="button">4</button>
+    <span>Mostrando 1 a 10 de {{ filteredDocumentos.length }} resultados</span>
+  </div>
+</section>
+
+<div class="auth-message" *ngIf="message">{{ message }}</div>

@@ -1,0 +1,11 @@
+:host { display: block; }
+
+.profile-identity {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.muted {
+  color: #64748b;
+}
