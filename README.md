@@ -1,59 +1,64 @@
-# FrontendAngular
+# Doctype Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.13.
+Frontend desenvolvido com Angular 21 para um sistema de gestão de documentos. A aplicação tem autenticação, área protegida e telas para cadastro, consulta e administração de usuários, tipos de documento e relatórios.
 
-## Development server
+## Visão geral
 
-To start a local development server, run:
+O app usa rotas separadas para login e cadastro inicial, e depois direciona o usuário para um layout principal com menu lateral. O acesso às telas internas é protegido por autenticação via guard.
 
-```bash
-ng serve
-```
+Os dados de sessão ficam salvos no `localStorage` com token e informações básicas do usuário.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Principais telas
 
-## Code scaffolding
+- Login
+- Cadastro de usuário
+- Dashboard
+- Perfil
+- Usuários
+- Tipos de documento
+- Cadastro de documento
+- Consulta de documento
+- Relatórios
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Fluxo de acesso
 
-```bash
-ng generate component component-name
-```
+1. O usuário entra pela tela de login.
+2. Após autenticação, o token é salvo localmente.
+3. As rotas internas passam pelo guard de autenticação.
+4. O layout principal exibe navegação e conteúdo da área logada.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Integração com a API
 
-```bash
-ng generate --help
-```
+O frontend consome uma API HTTP usando `fetch`. Em desenvolvimento, a base usada é `http://localhost:8081/api`; quando o app está servido na porta `8081`, a aplicação usa `/api`.
 
-## Building
+## Estrutura do projeto
 
-To build the project run:
+- `src/app/core`: serviços centrais, modelos e autenticação
+- `src/app/layout`: layout principal da aplicação
+- `src/app/pages`: páginas da aplicação
+- `src/app/app.routes.ts`: definição das rotas
 
-```bash
-ng build
-```
+## Como executar
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+Instale as dependências e inicie o projeto:
 
 ```bash
-ng e2e
+npm install
+npm start
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Depois, abra `http://localhost:4200/`.
 
-## Additional Resources
+## Build e testes
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```bash
+npm run build
+npm test
+```
+
+## Tecnologias
+
+- Angular 21
+- TypeScript
+- RxJS
+- Vitest
