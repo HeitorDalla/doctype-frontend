@@ -4,7 +4,7 @@ import { inject } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 
 import { ApiService } from '../../core/api.service';
-import { Documento, DocumentoForm } from '../../core/models';
+import { Documento, TipoDocumento } from '../../core/models';
 import { SessionService } from '../../core/session.service';
 
 @Component({
@@ -18,6 +18,8 @@ export class CadastrarDocumentoComponent {
   message = '';
   loading = false;
   documentos: Documento[] = [];
+  tiposDocumento: TipoDocumento[] = [];
+  statusOpcoes: string[] = ['Recebido', 'Em análise', 'Encaminhado', 'Finalizado'];
   arquivoSelecionado: File | null = null;
 
   private readonly fb = inject(FormBuilder);
@@ -25,8 +27,8 @@ export class CadastrarDocumentoComponent {
   readonly form = this.fb.nonNullable.group({
     nome: ['', [Validators.required]],
     descricao: [''],
-    tipoArquivo: ['PDF'],
-    status: ['Em Análise'],
+    tipoArquivo: ['', [Validators.required]],
+    status: ['Recebido', [Validators.required]],
     arquivoNome: ['', [Validators.required]]
   });
 
@@ -34,7 +36,7 @@ export class CadastrarDocumentoComponent {
     private readonly api: ApiService,
     private readonly session: SessionService
   ) {
-    void this.loadDocumentos();
+    void Promise.all([this.loadTiposDocumento(), this.loadStatusOpcoes(), this.loadDocumentos()]);
   }
 
   async loadDocumentos(): Promise<void> {
@@ -42,6 +44,25 @@ export class CadastrarDocumentoComponent {
       this.documentos = await this.api.get<Documento[]>('/documentos', this.session.token || undefined);
     } catch {
       this.documentos = [];
+    }
+  }
+
+  async loadTiposDocumento(): Promise<void> {
+    try {
+      this.tiposDocumento = await this.api.get<TipoDocumento[]>('/tipos-documento', this.session.token || undefined);
+      if (this.tiposDocumento.length > 0 && !this.form.controls.tipoArquivo.value) {
+        this.form.patchValue({ tipoArquivo: this.tiposDocumento[0].nome });
+      }
+    } catch {
+      this.tiposDocumento = [];
+    }
+  }
+
+  async loadStatusOpcoes(): Promise<void> {
+    try {
+      this.statusOpcoes = await this.api.get<string[]>('/documentos/status-opcoes', this.session.token || undefined);
+    } catch {
+      this.statusOpcoes = ['Recebido', 'Em análise', 'Encaminhado', 'Finalizado'];
     }
   }
 
@@ -75,8 +96,8 @@ export class CadastrarDocumentoComponent {
 
       payload.append('nome', value.nome);
       payload.append('descricao', value.descricao || '');
-      payload.append('tipoArquivo', value.tipoArquivo || 'PDF');
-      payload.append('status', value.status || 'Em Análise');
+      payload.append('tipoArquivo', value.tipoArquivo || '');
+      payload.append('status', value.status || 'Recebido');
       payload.append('arquivoNome', value.arquivoNome || this.arquivoSelecionado.name);
       payload.append('arquivoContentType', this.arquivoSelecionado.type || '');
 
@@ -87,8 +108,9 @@ export class CadastrarDocumentoComponent {
       payload.append('arquivo', this.arquivoSelecionado, this.arquivoSelecionado.name);
 
       await this.api.postForm<Documento>('/documentos', payload, this.session.token || undefined);
+      window.dispatchEvent(new CustomEvent('doctype:changed'));
       this.message = 'Documento criado com sucesso.';
-      this.form.reset({ tipoArquivo: 'PDF', status: 'Em Análise', arquivoNome: '' });
+      this.form.reset({ tipoArquivo: this.tiposDocumento[0]?.nome || '', status: 'Recebido', arquivoNome: '' });
       this.arquivoSelecionado = null;
       await this.loadDocumentos();
     } catch (error) {
@@ -97,4 +119,5 @@ export class CadastrarDocumentoComponent {
       this.loading = false;
     }
   }
+
 }

@@ -136,7 +136,9 @@ textarea {
 
 .form-card input,
 .form-card textarea,
+.form-card select,
 .filters-grid input,
+.filters-grid select,
 .search-box input,
 .file-upload input {
 	width: 100%;

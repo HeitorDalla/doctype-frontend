@@ -1,1 +1,87 @@
-:host { display: block; }
+:host {
+	display: block;
+}
+
+.page-header p {
+	margin: 8px 0 0;
+	color: #64748b;
+}
+
+.hero-card {
+	display: grid;
+	grid-template-columns: 1.1fr 0.9fr;
+	gap: 24px;
+	background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+	color: #f8fafc;
+	border: none;
+}
+
+.hero-copy h2 {
+	margin: 12px 0 8px;
+	font-size: 1.7rem;
+}
+
+.hero-copy p {
+	margin: 0;
+	color: #cbd5e1;
+	line-height: 1.6;
+}
+
+.badge {
+	display: inline-flex;
+	align-items: center;
+	padding: 6px 10px;
+	border-radius: 999px;
+	background: rgba(59, 130, 246, 0.18);
+	color: #93c5fd;
+	font-size: 0.78rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+}
+
+.hero-side {
+	display: grid;
+	gap: 12px;
+}
+
+.mini-stat {
+	padding: 16px 18px;
+	border-radius: 16px;
+	background: rgba(255, 255, 255, 0.08);
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	display: grid;
+	gap: 4px;
+}
+
+.mini-stat span {
+	color: #cbd5e1;
+	font-size: 0.88rem;
+}
+
+.mini-stat strong {
+	font-size: 1.2rem;
+	color: #ffffff;
+}
+
+.file-strip {
+	margin-top: 16px;
+	display: grid;
+	gap: 10px;
+}
+
+.file-hint {
+	color: #64748b;
+	font-size: 0.92rem;
+}
+
+select,
+input,
+textarea {
+	width: 100%;
+}
+
+@media (max-width: 980px) {
+	.hero-card {
+		grid-template-columns: 1fr;
+	}
+}

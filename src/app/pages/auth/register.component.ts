@@ -23,7 +23,8 @@ export class RegisterComponent {
     nome: ['', [Validators.required, Validators.minLength(3)]],
     email: ['', [Validators.required, Validators.email]],
     senha: ['', [Validators.required, Validators.minLength(6)]],
-    confirmSenha: ['', [Validators.required]]
+    confirmSenha: ['', [Validators.required]],
+    perfilAcesso: ['OPERADOR']
   });
 
   constructor(
@@ -47,7 +48,7 @@ export class RegisterComponent {
     this.message = '';
 
     try {
-      await this.session.register(value.nome, value.email, value.senha);
+      await this.session.register(value.nome, value.email, value.senha, value.perfilAcesso);
       await this.router.navigateByUrl('/dashboard');
     } catch (error) {
       this.message = error instanceof Error ? error.message : 'Falha ao registrar';

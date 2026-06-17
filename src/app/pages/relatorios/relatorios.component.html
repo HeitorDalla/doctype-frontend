@@ -5,9 +5,24 @@
 <section class="card report-card">
   <form class="filters-grid" [formGroup]="form" (ngSubmit)="buscar()">
     <label>Nº Protocolo<input type="text" formControlName="protocolo" placeholder="001" /></label>
-    <label>Tipo<input type="text" formControlName="tipo" placeholder="PDF" /></label>
-    <label>Status<input type="text" formControlName="status" placeholder="Em Análise" /></label>
+    <label>
+      Tipo
+      <select formControlName="tipo">
+        <option value="">Todos</option>
+        <option *ngFor="let tipo of tiposDocumento" [value]="tipo.nome">{{ tipo.nome }}</option>
+      </select>
+    </label>
+    <label>
+      Status
+      <select formControlName="status">
+        <option value="">Todos</option>
+        <option *ngFor="let status of statusOpcoes" [value]="status">{{ status }}</option>
+      </select>
+    </label>
     <label>Nome<input type="text" formControlName="nome" placeholder="Contrato" /></label>
+    <label>Remetente<input type="text" formControlName="remetente" placeholder="Nome ou email" /></label>
+    <label>Data inicial<input type="date" formControlName="dataInicio" /></label>
+    <label>Data final<input type="date" formControlName="dataFim" /></label>
     <label>Data<input type="date" formControlName="data" /></label>
     <div class="actions bottom-right">
       <button class="primary-button" type="submit">Buscar</button>

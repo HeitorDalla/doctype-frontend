@@ -1,42 +1,59 @@
 <header class="page-header">
-  <h1>Cadastrar Documento</h1>
+  <div>
+    <h1>Cadastro de Documento</h1>
+    <p>Registre a entrada do documento e vincule-o a um tipo cadastrado.</p>
+  </div>
 </header>
+
+<section class="card hero-card">
+  <div class="hero-copy">
+    <span class="badge">RF04</span>
+    <h2>Entrada de documentos</h2>
+    <p>Ao salvar, o sistema gera automaticamente um protocolo único e registra a movimentação inicial.</p>
+  </div>
+
+  <div class="hero-side">
+    <div class="mini-stat">
+      <span>Tipos disponíveis</span>
+      <strong>{{ tiposDocumento.length }}</strong>
+    </div>
+    <div class="mini-stat">
+      <span>Status padrão</span>
+      <strong>Recebido</strong>
+    </div>
+  </div>
+</section>
 
 <section class="card form-card">
   <form [formGroup]="form" (ngSubmit)="submit()">
-    <label>Nome do Documento<input type="text" formControlName="nome" placeholder="Ex: Contrato" /></label>
-    <label>Descrição<textarea rows="4" formControlName="descricao" placeholder="Descreva o documento..."></textarea></label>
-    <label>Tipo<input type="text" formControlName="tipoArquivo" placeholder="PDF" /></label>
-    <label>Status<input type="text" formControlName="status" placeholder="Em Análise" /></label>
-    <label>Arquivo<input type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" (change)="onArquivoSelecionado($event)" /></label>
-    <label>Nome do arquivo<input type="text" formControlName="arquivoNome" placeholder="arquivo.pdf" readonly /></label>
+    <div class="grid-2">
+      <label>Nome do documento<input type="text" formControlName="nome" placeholder="Ex: Contrato" /></label>
+      <label>
+        Tipo de documento
+        <select formControlName="tipoArquivo">
+          <option value="" disabled>Selecione um tipo</option>
+          <option *ngFor="let tipo of tiposDocumento" [value]="tipo.nome">{{ tipo.nome }}</option>
+        </select>
+      </label>
+      <label>
+        Status
+        <select formControlName="status">
+          <option *ngFor="let status of statusOpcoes" [value]="status">{{ status }}</option>
+        </select>
+      </label>
+      <label>Nome do arquivo<input type="text" formControlName="arquivoNome" placeholder="arquivo.pdf" readonly /></label>
+      <label class="full-width">Descrição<textarea rows="4" formControlName="descricao" placeholder="Descreva o documento..."></textarea></label>
+    </div>
+
+    <div class="file-strip">
+      <label>Arquivo<input type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" (change)="onArquivoSelecionado($event)" /></label>
+      <div class="file-hint">Selecione o arquivo antes de salvar.</div>
+    </div>
 
     <div class="actions right-align">
       <button class="primary-button" type="submit" [disabled]="loading">{{ loading ? 'Salvando...' : 'Salvar' }}</button>
     </div>
   </form>
-</section>
-
-<section class="card table-card">
-  <div class="section-title">Documentos Cadastrados</div>
-  <table>
-    <thead>
-      <tr>
-        <th>Protocolo</th>
-        <th>Nome</th>
-        <th>Status</th>
-        <th>Arquivo</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let documento of documentos">
-        <td>{{ documento.protocolo }}</td>
-        <td>{{ documento.nome }}</td>
-        <td>{{ documento.status }}</td>
-        <td>{{ documento.arquivoNome || 'Sem arquivo' }}</td>
-      </tr>
-    </tbody>
-  </table>
 </section>
 
 <div class="auth-message" *ngIf="message">{{ message }}</div>

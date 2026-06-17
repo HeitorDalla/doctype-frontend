@@ -1,9 +1,50 @@
 <header class="page-header">
-  <h1>Consulta de Documento</h1>
-  <div class="search-box wide">
-    <input type="search" [value]="termo" (input)="onSearch($any($event.target).value)" placeholder="Buscar documento..." />
+  <div>
+    <h1>Consulta de Documentos</h1>
+    <p>Filtre, acompanhe a movimentação e altere o status diretamente na lista.</p>
   </div>
 </header>
+
+<section class="card report-card">
+  <form class="filters-grid" [formGroup]="form" (ngSubmit)="buscar()">
+    <label>Protocolo<input type="text" formControlName="protocolo" placeholder="PRT-..." /></label>
+    <label>Remetente<input type="text" formControlName="remetente" placeholder="Nome ou email" /></label>
+    <label>
+      Tipo
+      <select formControlName="tipo">
+        <option value="">Todos</option>
+        <option *ngFor="let tipo of tiposDocumento" [value]="tipo.nome">{{ tipo.nome }}</option>
+      </select>
+    </label>
+    <label>
+      Status
+      <select formControlName="status">
+        <option value="">Todos</option>
+        <option *ngFor="let status of statusOpcoes" [value]="status">{{ status }}</option>
+      </select>
+    </label>
+    <label>Data início<input type="date" formControlName="dataInicio" /></label>
+    <label>Data fim<input type="date" formControlName="dataFim" /></label>
+    <div class="actions bottom-right">
+      <button class="primary-button" type="submit">Buscar</button>
+    </div>
+  </form>
+</section>
+
+<section class="card summary-card">
+  <div>
+    <span class="summary-label">Total exibido</span>
+    <strong>{{ documentos.length }}</strong>
+  </div>
+  <div>
+    <span class="summary-label">Status padrão</span>
+    <strong>Recebido</strong>
+  </div>
+  <div>
+    <span class="summary-label">Filtro principal</span>
+    <strong>Protocolo, remetente, tipo e período</strong>
+  </div>
+</section>
 
 <section class="card table-card">
   <table>
@@ -11,28 +52,49 @@
       <tr>
         <th>Protocolo</th>
         <th>Nome do Doc.</th>
+        <th>Remetente</th>
+        <th>Tipo</th>
         <th>Data</th>
         <th>Status</th>
+        <th>Ações</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let documento of filteredDocumentos">
+      <ng-container *ngFor="let documento of documentos">
+      <tr>
         <td>{{ documento.protocolo }}</td>
         <td>{{ documento.nome }}</td>
+        <td>{{ documento.usuarioNome || documento.usuarioEmail || '-' }}</td>
+        <td>{{ documento.tipoArquivo || '-' }}</td>
         <td>{{ documento.criadoEm | date: 'dd/MM/yyyy' }}</td>
-        <td><span class="status status-success">{{ documento.status }}</span></td>
+        <td>
+          <select class="status-select" [(ngModel)]="statusSelecionado[documento.id]" [ngModelOptions]="{ standalone: true }">
+            <option *ngFor="let status of statusOpcoes" [value]="status">{{ status }}</option>
+          </select>
+        </td>
+        <td>
+          <button class="primary-button action-button" type="button" (click)="atualizarStatus(documento)">Atualizar</button>
+          <button class="secondary-button action-button" type="button" (click)="toggleHistorico(documento.id)">
+            {{ historicoAberto[documento.id] ? 'Ocultar histórico' : 'Ver histórico' }}
+          </button>
+        </td>
       </tr>
+      <tr *ngIf="historicoAberto[documento.id]">
+        <td colspan="7">
+          <strong>Histórico de movimentação</strong>
+          <ul class="history-list" *ngIf="historicoPorDocumento[documento.id]?.length; else semHistorico">
+            <li *ngFor="let atividade of historicoPorDocumento[documento.id]">
+              {{ atividade.criadoEm | date: 'dd/MM/yyyy HH:mm' }} - {{ atividade.descricao }}
+            </li>
+          </ul>
+          <ng-template #semHistorico>
+            <span>Nenhuma movimentação registrada.</span>
+          </ng-template>
+        </td>
+      </tr>
+      </ng-container>
     </tbody>
   </table>
-
-  <div class="pagination">
-    <button type="button">&lt;</button>
-    <button type="button" class="active">1</button>
-    <button type="button">2</button>
-    <button type="button">3</button>
-    <button type="button">4</button>
-    <span>Mostrando 1 a 10 de {{ filteredDocumentos.length }} resultados</span>
-  </div>
 </section>
 
 <div class="auth-message" *ngIf="message">{{ message }}</div>

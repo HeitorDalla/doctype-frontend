@@ -2,6 +2,35 @@
   display: block;
 }
 
+.brand-block {
+  display: grid;
+  gap: 6px;
+}
+
+.brand-block p {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 0.92rem;
+}
+
+.nav-section {
+  margin: 8px 0 2px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.sidebar nav {
+  gap: 8px;
+}
+
+.sidebar a {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid transparent;
+}
+
 .sidebar-footer {
   margin-top: auto;
   padding-top: 24px;
@@ -16,4 +45,8 @@
 
 .logout-button {
   width: 100%;
+}
+
+.sidebar .active {
+  border-color: rgba(255, 255, 255, 0.08);
 }

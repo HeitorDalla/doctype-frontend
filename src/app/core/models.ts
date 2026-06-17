@@ -2,6 +2,7 @@ export interface AuthResponse {
   id: number;
   email: string;
   nome: string;
+  perfilAcesso?: string;
   token: string;
   tokenType: string;
   expiresIn: number;
@@ -34,6 +35,13 @@ export interface Documento {
   usuarioId?: number;
   usuarioNome?: string;
   usuarioEmail?: string;
+}
+
+export interface TipoDocumento {
+  id: number;
+  nome: string;
+  descricao?: string;
+  ativo?: boolean;
 }
 
 export interface Atividade {
@@ -76,4 +84,15 @@ export interface UsuarioForm {
   email: string;
   senha: string;
   perfilAcesso?: string;
+}
+
+export interface DocumentoFiltros {
+  termo?: string;
+  status?: string;
+  tipo?: string;
+  protocolo?: string;
+  nome?: string;
+  remetente?: string;
+  dataInicio?: string;
+  dataFim?: string;
 }

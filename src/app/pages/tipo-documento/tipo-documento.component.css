@@ -1,0 +1,68 @@
+:host {
+  display: block;
+}
+
+.page-header-split {
+  align-items: flex-end;
+}
+
+.page-header p {
+  margin: 8px 0 0;
+  color: #64748b;
+}
+
+.hero-card {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 28px;
+  align-items: start;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid #dbe4f0;
+}
+
+.hero-copy h2 {
+  margin: 12px 0 10px;
+  font-size: 1.7rem;
+  color: #0f172a;
+}
+
+.hero-copy p {
+  margin: 0;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.stacked-form {
+  display: grid;
+  gap: 16px;
+}
+
+.stacked-form label {
+  display: grid;
+  gap: 8px;
+  color: #334155;
+  font-weight: 500;
+}
+
+.stacked-form input,
+.stacked-form textarea {
+  width: 100%;
+}
+
+@media (max-width: 980px) {
+  .hero-card {
+    grid-template-columns: 1fr;
+  }
+}

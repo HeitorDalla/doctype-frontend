@@ -21,6 +21,12 @@
       <label for="confirmSenha">Confirmar Senha</label>
       <input id="confirmSenha" type="password" formControlName="confirmSenha" placeholder="Digite novamente a senha" />
 
+      <label for="perfilAcesso">Perfil de acesso</label>
+      <select id="perfilAcesso" formControlName="perfilAcesso">
+        <option value="OPERADOR">Operador</option>
+        <option value="ADMINISTRADOR">Administrador</option>
+      </select>
+
       <button type="submit" class="primary-button" [disabled]="loading">
         {{ loading ? 'Registrando...' : 'Registrar' }}
       </button>

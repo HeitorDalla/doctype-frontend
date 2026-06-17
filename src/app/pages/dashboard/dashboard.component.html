@@ -5,11 +5,23 @@
   </div>
 </header>
 
+<section class="card dashboard-empty" *ngIf="loading && !resumo">
+  <div class="skeleton-title"></div>
+  <div class="skeleton-grid">
+    <div class="skeleton-card" *ngFor="let item of [1,2,3,4]"></div>
+  </div>
+</section>
+
 <section class="card stats-grid" *ngIf="resumo as r">
   <div class="stat-card"><span>Total de usuarios</span><strong>{{ r.totalUsuarios }}</strong></div>
   <div class="stat-card"><span>Total de documentos</span><strong>{{ r.totalDocumentos }}</strong></div>
   <div class="stat-card"><span>Em analise</span><strong>{{ r.documentosEmAnalise }}</strong></div>
   <div class="stat-card"><span>Finalizados</span><strong>{{ r.documentosFinalizados }}</strong></div>
+</section>
+
+<section class="card dashboard-empty" *ngIf="!loading && !resumo">
+  <div class="section-title">Painel indisponível</div>
+  <p class="muted">Os dados ainda não foram carregados. Tente atualizar a página ou acionar qualquer alteração no sistema.</p>
 </section>
 
 <section class="card activity-card">

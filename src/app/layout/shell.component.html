@@ -1,11 +1,21 @@
 <div class="page-wrapper">
   <aside class="sidebar">
-    <div class="brand">Doc.type</div>
+    <div class="brand-block">
+      <div class="brand">Doc.type</div>
+      <p>Gestão documental</p>
+    </div>
+
     <nav>
-      <a routerLink="/dashboard" routerLinkActive="active">Perfil Usuário</a>
-      <a routerLink="/usuario" routerLinkActive="active">Cadastro de Usuário</a>
-      <a routerLink="/cadastrar-documento" routerLinkActive="active">Cadastrar Documentos</a>
-      <a routerLink="/consulta-documento" routerLinkActive="active">Entrada de Documentos</a>
+      <span class="nav-section">Geral</span>
+      <a routerLink="/dashboard" routerLinkActive="active">Painel</a>
+      <a *ngIf="session.isAdministrator" routerLink="/usuario" routerLinkActive="active">Cadastro de Usuário</a>
+
+      <span class="nav-section">Documentos</span>
+      <a routerLink="/tipo-documento" routerLinkActive="active">Cadastro de Tipo de Documento</a>
+      <a routerLink="/cadastrar-documento" routerLinkActive="active">Cadastro de Documento</a>
+      <a routerLink="/consulta-documento" routerLinkActive="active">Consulta de Documentos</a>
+
+      <span class="nav-section">Dados</span>
       <a routerLink="/relatorios" routerLinkActive="active">Relatórios</a>
     </nav>
     <div class="sidebar-footer">

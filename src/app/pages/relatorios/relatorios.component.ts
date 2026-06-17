@@ -4,7 +4,7 @@ import { inject } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 
 import { ApiService } from '../../core/api.service';
-import { Documento } from '../../core/models';
+import { Documento, TipoDocumento } from '../../core/models';
 import { SessionService } from '../../core/session.service';
 
 @Component({
@@ -16,6 +16,8 @@ import { SessionService } from '../../core/session.service';
 })
 export class RelatoriosComponent implements OnInit {
   documentos: Documento[] = [];
+  tiposDocumento: TipoDocumento[] = [];
+  statusOpcoes: string[] = ['Recebido', 'Em análise', 'Encaminhado', 'Finalizado'];
   message = '';
 
   private readonly fb = inject(FormBuilder);
@@ -25,6 +27,9 @@ export class RelatoriosComponent implements OnInit {
     tipo: [''],
     status: [''],
     nome: [''],
+    remetente: [''],
+    dataInicio: [''],
+    dataFim: [''],
     data: ['']
   });
 
@@ -34,6 +39,7 @@ export class RelatoriosComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    await Promise.all([this.loadTiposDocumento(), this.loadStatusOpcoes()]);
     await this.buscar();
   }
 
@@ -55,6 +61,22 @@ export class RelatoriosComponent implements OnInit {
       this.documentos = await this.api.get<Documento[]>(path, this.session.token || undefined);
     } catch (error) {
       this.message = error instanceof Error ? error.message : 'Falha ao carregar relatorios';
+    }
+  }
+
+  private async loadTiposDocumento(): Promise<void> {
+    try {
+      this.tiposDocumento = await this.api.get<TipoDocumento[]>('/tipos-documento', this.session.token || undefined);
+    } catch {
+      this.tiposDocumento = [];
+    }
+  }
+
+  private async loadStatusOpcoes(): Promise<void> {
+    try {
+      this.statusOpcoes = await this.api.get<string[]>('/documentos/status-opcoes', this.session.token || undefined);
+    } catch {
+      this.statusOpcoes = ['Recebido', 'Em análise', 'Encaminhado', 'Finalizado'];
     }
   }
 }

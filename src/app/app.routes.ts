@@ -10,6 +10,7 @@ import { PerfilComponent } from './pages/perfil/perfil.component';
 import { RegisterComponent } from './pages/auth/register.component';
 import { RelatoriosComponent } from './pages/relatorios/relatorios.component';
 import { UsuarioComponent } from './pages/usuario/usuario.component';
+import { TipoDocumentoComponent } from './pages/tipo-documento/tipo-documento.component';
 
 export const routes: Routes = [
 	{ path: '', pathMatch: 'full', component: LoginComponent },
@@ -22,6 +23,7 @@ export const routes: Routes = [
 			{ path: 'dashboard', component: DashboardComponent },
 			{ path: 'perfil', component: PerfilComponent },
 			{ path: 'usuario', component: UsuarioComponent },
+			{ path: 'tipo-documento', component: TipoDocumentoComponent },
 			{ path: 'cadastrar-documento', component: CadastrarDocumentoComponent },
 			{ path: 'consulta-documento', component: ConsultaDocumentoComponent },
 			{ path: 'relatorios', component: RelatoriosComponent },

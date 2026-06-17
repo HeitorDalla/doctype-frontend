@@ -32,6 +32,14 @@ export class SessionService {
     return this.user?.nome || 'Usuario';
   }
 
+  get currentUserProfile(): string {
+    return this.user?.perfilAcesso || 'OPERADOR';
+  }
+
+  get isAdministrator(): boolean {
+    return this.currentUserProfile === 'ADMINISTRADOR';
+  }
+
   get isAuthenticated(): boolean {
     return Boolean(this.token);
   }
@@ -42,8 +50,8 @@ export class SessionService {
     return response;
   }
 
-  async register(nome: string, email: string, senha: string): Promise<AuthResponse> {
-    const response = await this.api.post<AuthResponse>('/auth/registro', { nome, email, senha });
+  async register(nome: string, email: string, senha: string, perfilAcesso = 'OPERADOR'): Promise<AuthResponse> {
+    const response = await this.api.post<AuthResponse>('/auth/registro', { nome, email, senha, perfilAcesso });
     this.storeSession(response);
     return response;
   }

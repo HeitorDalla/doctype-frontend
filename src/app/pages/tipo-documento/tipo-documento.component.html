@@ -1,0 +1,54 @@
+<header class="page-header page-header-split">
+  <div>
+    <h1>Cadastro de Tipo de Documento</h1>
+    <p>Crie e acompanhe os tipos usados na entrada de documentos.</p>
+  </div>
+</header>
+
+<section class="card form-card hero-card">
+  <div class="hero-copy">
+    <span class="badge">RF03</span>
+    <h2>Novo tipo de documento</h2>
+    <p>Organize o cadastro com nomes objetivos como Ofício, Requerimento, Contrato ou Memorando.</p>
+  </div>
+
+  <form class="stacked-form" [formGroup]="form" (ngSubmit)="submit()">
+    <label>
+      Nome do tipo
+      <input type="text" formControlName="nome" placeholder="Ex: Ofício" />
+    </label>
+
+    <label>
+      Descrição
+      <textarea rows="4" formControlName="descricao" placeholder="Descrição opcional"></textarea>
+    </label>
+
+    <div class="actions right-align">
+      <button class="primary-button" type="submit" [disabled]="loading">
+        {{ loading ? 'Salvando...' : 'Cadastrar tipo' }}
+      </button>
+    </div>
+  </form>
+</section>
+
+<section class="card table-card">
+  <div class="section-title">Tipos cadastrados</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tipo of tiposDocumento">
+        <td>{{ tipo.nome }}</td>
+        <td>{{ tipo.descricao || '-' }}</td>
+        <td><span class="status status-success">Ativo</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="auth-message" *ngIf="message">{{ message }}</div>

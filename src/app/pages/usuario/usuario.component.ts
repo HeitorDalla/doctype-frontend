@@ -40,6 +40,10 @@ export class UsuarioComponent {
     void this.loadUsuarios();
   }
 
+  get isAdministrator(): boolean {
+    return this.session.isAdministrator;
+  }
+
   async loadUsuarios(): Promise<void> {
     try {
       this.usuarios = await this.api.get<Usuario[]>('/usuarios', this.session.token || undefined);
@@ -49,6 +53,11 @@ export class UsuarioComponent {
   }
 
   async submit(): Promise<void> {
+    if (!this.isAdministrator) {
+      this.message = 'Somente administrador pode criar usuários.';
+      return;
+    }
+
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -60,6 +69,7 @@ export class UsuarioComponent {
     try {
       const payload = this.form.getRawValue() as UsuarioForm;
       await this.api.post<Usuario>('/usuarios', payload, this.session.token || undefined);
+      window.dispatchEvent(new CustomEvent('doctype:changed'));
       this.message = 'Usuario criado com sucesso.';
       this.form.reset({ perfilAcesso: 'OPERADOR' });
       await this.loadUsuarios();

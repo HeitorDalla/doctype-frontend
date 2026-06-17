@@ -2,7 +2,7 @@
   <h1>Cadastro de Novo Usuário</h1>
 </header>
 
-<section class="card form-card">
+<section class="card form-card" *ngIf="isAdministrator; else operadorAviso">
   <div class="section-title">Dados Pessoais</div>
   <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="grid-2">
@@ -20,7 +20,6 @@
       <span>Perfil de acesso</span>
       <label><input type="radio" formControlName="perfilAcesso" value="ADMINISTRADOR" /> Administrador</label>
       <label><input type="radio" formControlName="perfilAcesso" value="OPERADOR" /> Operador</label>
-      <label><input type="radio" formControlName="perfilAcesso" value="VISUALIZADOR" /> Visualizador</label>
     </div>
 
     <div class="actions">
@@ -28,6 +27,13 @@
     </div>
   </form>
 </section>
+
+<ng-template #operadorAviso>
+  <section class="card notice-card">
+    <div class="section-title">Acesso restrito</div>
+    <p>Você está logado como operador. Apenas administradores podem criar novos usuários.</p>
+  </section>
+</ng-template>
 
 <section class="card table-card">
   <div class="section-title">Usuários Cadastrados</div>

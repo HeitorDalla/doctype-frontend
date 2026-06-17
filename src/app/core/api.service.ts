@@ -31,6 +31,14 @@ export class ApiService {
     }, token);
   }
 
+  async patch<T>(path: string, body: unknown, token?: string): Promise<T> {
+    return this.request<T>(path, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    }, token);
+  }
+
   private async request<T>(path: string, init: RequestInit, token?: string): Promise<T> {
     const headers = new Headers(init.headers || {});
 
